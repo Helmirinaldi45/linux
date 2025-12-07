@@ -114,10 +114,9 @@ macro_rules! impl_parse_int {
                 fn from_u64_negated(value: u64) -> Result<Self> {
                     const ABS_MIN: u64 = {
                         #[allow(unused_comparisons)]
-                        if <$ty>::MIN < 0 {
-                            1u64 << (<$ty>::BITS - 1)
-                        } else {
-                            0
+                        match <$ty>::MIN < 0 {
+                            true => 1u64 << (<$ty>::BITS - 1)
+                            false => 0
                         }
                     };
 
